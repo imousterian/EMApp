@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-4">
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th><h3><%= @event.title%> </h3></th>
+                    <th></th>
+                </tr>
+            <tbody>
+                <tr>
+                    <td><strong>Title:</strong> </td>
+                    <td> <%= @event.title %> </td>
+                </tr>
+                <tr>
+                    <td><strong>Start date:</strong></td>
+                    <td><%= @event.start_date %></td>
+                </tr>
+                <tr>
+                    <td><strong>End date:</strong></td>
+                    <td><%= @event.end_date %></td>
+                </tr>
+                <tr>
+                    <td><strong>Location:</strong></td>
+                    <td><%= @event.location %></td>
+                </tr>
+                <tr>
+                    <td><strong>Agenda:</strong></td>
+                    <td><%= @event.agenda %></td>
+                </tr>
+                <tr>
+                    <td><strong>Address:</strong></td>
+                    <td><%= @event.address %> </td>
+                </tr>
+                <tr>
+                    <td><strong>Attendees:</strong></td>
+                    <td><% @attendees.each do |attendee| %>
+                        <%= image_tag avatar_url(attendee.user) %>
+
+                        <%= attendee.user.email %>
+                        <br /><br/>
+                        <% end %>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <%= link_to 'Edit', edit_event_path(@event) %> | <%= link_to 'Back', events_path %>
+        <%= render partial: 'pending', :locals => {:event => @event} %>
+    </div>
+</div>
+
+
+<!-- <p> -->
+    <%# @event_owners.each do |event_owner| %>
+        <%#= image_tag avatar_url(@event.organizer) %>
+        <!-- <strong>Organizer:</strong> -->
+        <%#= image_tag avatar_url(@event_owner) %>
+        <%#= @event.organizer.email %>
+    <%# end %>
+<!-- </p> -->
+
+
+<%#= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+
+
+

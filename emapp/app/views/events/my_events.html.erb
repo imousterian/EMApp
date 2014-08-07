@@ -1,0 +1,58 @@
+<!-- <div class="row"> -->
+    <div class="col-sm-offset-2">
+    <!--List Recently Created Events-->
+        <h3>Recently Created Events</h3>
+        <%= link_to 'Create an Event', new_event_path %>
+
+        <table class='table'>
+            <tbody>
+                <% @events.each do |event| %>
+                    <tr>
+                        <td> <h3><%= event.title %></h3></td>
+                    </tr>
+                    <tr>
+                        <td> Start Date: </td>
+                        <td> <%= l event.start_date, :format => :date_format %> </td>
+                    </tr>
+                    <tr>
+                        <td> End Date: </td>
+                        <td> <%= l event.end_date, :format => :date_format %> </td>
+                    </tr>
+                    <tr>
+                        <td> Location: </td>
+                        <td> <%= event.location %> </td>
+                    </tr>
+                    <tr>
+                        <td> Address: </td>
+                        <td> <%= event.address %></td>
+                    </tr>
+                    <tr>
+                        <td> Agenda: </td>
+                        <td> <%= event.agenda %></td>
+                    </tr>
+                    <tr>
+                        <% @event_owner = Event.event_owner(event.organizer_id) %>
+                        <td> Organized By: </td>
+                        <td> <%= image_tag avatar_url(@event_owner) %>
+                            <br/>
+                            <%= @event_owner.email %>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tags:</td>
+                        <td><%=raw event.tags.map(&:name).map { |t| link_to t, tag_path(t) }.join(', ') %></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <%= link_to 'Show Details', event, :class=>"btn btn-info btn-sm" %>
+                            <% if user_signed_in? && event.organizer_id == current_user.id%>
+                                <%= link_to 'Edit', edit_event_path(event), :class=>"btn btn-primary btn-sm" %>
+                                <%= link_to 'Delete', event, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"btn btn-danger btn-sm" %>
+                            <%end%>
+                        </td>
+                    </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

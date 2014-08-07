@@ -1,0 +1,32 @@
+<h3>All events</h3>
+
+<table class='table table-striped'>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Location</th>
+      <th>Agenda</th>
+      <th>Address</th>
+      <th>Organizer</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @events.each do |event| %>
+      <tr>
+        <td><%= event.title %></td>
+        <td><%= l event.start_date, :format => :date_format %></td>
+        <td><%= l event.end_date,   :format => :date_format %></td>
+        <td><%= event.location %></td>
+        <td><%= event.agenda %></td>
+        <td><%= event.address %></td>
+        <td><%= event.organizer.name %></td>
+        <td><%= link_to 'Join', event_join_path(:event_id => event.id), :class => 'btn btn-success btn-sm' %></td>
+        <td><%= link_to 'Show', event_path(event), :class => 'btn btn-primary btn-sm' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
