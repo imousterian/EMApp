@@ -45,6 +45,8 @@ gem 'spring',        group: :development
 
 gem 'minitest-reporters', group: :test
 
+gem 'minitest-rails-capybara', group: :test
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

@@ -1,19 +1,30 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-  start_date: 2014-08-06 11:48:37
-  end_date: 2014-08-06 11:48:37
-  location: MyString
-  agenda: MyText
-  address: MyText
-  organizer_id: 1
+event1:
+    title: MyString
+    start_date: 2014-08-06 11:48:37
+    end_date: 2014-08-06 11:48:37
+    location: MyString
+    agenda: MyText
+    address: MyText
+    organizer_id: 1
+    # user_id: 2
 
-two:
-  title: MyString
-  start_date: 2014-08-06 11:48:37
-  end_date: 2014-08-06 11:48:37
-  location: MyString
-  agenda: MyText
-  address: MyText
-  organizer_id: 1
+event2:
+    title: MyString
+    start_date: 2014-08-06 11:48:37
+    end_date: 2014-08-06 11:48:37
+    location: MyString
+    agenda: MyText
+    address: MyText
+    organizer_id: 2
+
+event_to_join:
+    title: MyString
+    start_date: 2014-08-06 11:48:37
+    end_date: 2014-08-06 11:48:37
+    location: MyString
+    agenda: MyText
+    address: MyText
+    organizer_id: 2
+    id: 1

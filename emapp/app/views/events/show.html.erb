@@ -32,6 +32,13 @@
                     <td><%= @event.address %> </td>
                 </tr>
                 <tr>
+                    <td><strong>Organized By:</strong></td>
+                    <td> <%= image_tag avatar_url(@event_owner) %>
+                            <br/>
+                            <%= @event_owner.email %>
+                    </td>
+                </tr>
+                <tr>
                     <td><strong>Attendees:</strong></td>
                     <td><% @attendees.each do |attendee| %>
                         <%= image_tag avatar_url(attendee.user) %>
@@ -48,20 +55,4 @@
         <%= render partial: 'pending', :locals => {:event => @event} %>
     </div>
 </div>
-
-
-<!-- <p> -->
-    <%# @event_owners.each do |event_owner| %>
-        <%#= image_tag avatar_url(@event.organizer) %>
-        <!-- <strong>Organizer:</strong> -->
-        <%#= image_tag avatar_url(@event_owner) %>
-        <%#= @event.organizer.email %>
-    <%# end %>
-<!-- </p> -->
-
-
-<%#= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %>
-
-
-
 

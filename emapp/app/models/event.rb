@@ -12,6 +12,8 @@ class Event < ActiveRecord::Base
     has_many :attendances
     has_many :users, through: :attendances
 
+    # validates :title, :start_date, :end_date, :location, :agenda, :address, :organizer_id, :all_tags, :presence => true
+
     def slugged_candidates
         [
             :title,
@@ -21,8 +23,10 @@ class Event < ActiveRecord::Base
     end
 
     def all_tags=(names)
-        self.tags = names.split(",").map do |t|
-            Tag.where(name: t.strip).first_or_create!
+        if !names.nil?
+            self.tags = names.split(",").map do |t|
+                Tag.where(name: t.strip).first_or_create!
+            end
         end
     end
 
@@ -45,11 +49,10 @@ class Event < ActiveRecord::Base
     end
 
     def pending_requests(event_id)
-        # Attendance.where(event_id: event_id, state: 'request_sent')
         Attendance.pending.where(event_id: event_id)
     end
 
-    def self.show_accepted_attendees(event_id)
+    def show_accepted_attendees(event_id)
         Attendance.accepted.where(event_id: event_id)
     end
 
