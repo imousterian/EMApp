@@ -10,7 +10,6 @@ class EventsControllerTest < ActionController::TestCase
             setup do
                 @event = events(:event1)
                 @user1 = users(:userone)
-                # sign_in users(:userone)
                 sign_in @user1
             end
             it "should get index" do
@@ -68,14 +67,12 @@ class EventsControllerTest < ActionController::TestCase
             end
 
             it "cant send a successfull join request to join own event" do
-                # puts "#{}"
                 get :join, event_id: @event
                 assert_redirected_to root_url
                 assert_equal "You can not join your own event.", flash[:notice]
             end
 
             it 'sends a successful join request' do
-
                 event_to_join = events(:event_to_join)
                 get :join, event_id: event_to_join
                 assert_redirected_to event_path(event_to_join)

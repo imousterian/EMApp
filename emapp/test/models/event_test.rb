@@ -3,8 +3,6 @@ require 'test_helper'
 class EventTest < ActiveSupport::TestCase
       describe "Event validations" do
 
-        # { case_sensitive: false }
-
         let(:event) { events(:event1) }
         let(:user)  {  users(:usertwo) }
 
@@ -27,14 +25,8 @@ class EventTest < ActiveSupport::TestCase
             event.errors[:title].must_be :present?
         end
 
-        it "is not valid without start_date" do
-            event.start_date = ""
-            event.wont_be :valid?
-            event.errors[:start_date].must_be :present?
-        end
-
-        it "is not valid without end_date" do
-            event.end_date = ""
+        it "end date cannot be before start date" do
+            event.end_date = "2014-08-06 10:48:40"
             event.wont_be :valid?
             event.errors[:end_date].must_be :present?
         end
@@ -68,6 +60,14 @@ class EventTest < ActiveSupport::TestCase
             event.wont_be :valid?
             event.errors[:all_tags].must_be :present?
         end
+
+        it "does not allow duplicate names" do
+            dup = events(:event1)
+            assert_difference('Tag.count', 1) do
+                dup.all_tags=('Tag2, tag2')
+            end
+        end
+
     end
 
 end

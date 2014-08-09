@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
     extend FriendlyId
+    include ActiveModel::Validations
 
     friendly_id :title, use: :slugged
     friendly_id :slugged_candidates, use: :slugged
@@ -12,7 +13,12 @@ class Event < ActiveRecord::Base
     has_many :attendances
     has_many :users, through: :attendances
 
-    # validates :title, :start_date, :end_date, :location, :agenda, :address, :organizer_id, :all_tags, :presence => true
+    validates :title, :location, :agenda, :address, :organizer_id, :all_tags, :presence => true
+    validate :end_after_start
+
+    validates_presence_of :start_date, :end_date, on: :new
+    validates_presence_of :start_date, :end_date, on: :edit
+
 
     def slugged_candidates
         [
@@ -24,6 +30,8 @@ class Event < ActiveRecord::Base
 
     def all_tags=(names)
         if !names.nil?
+            names.downcase!
+            names = names.split(',').collect(&:strip).uniq.join(',')
             self.tags = names.split(",").map do |t|
                 Tag.where(name: t.strip).first_or_create!
             end
@@ -55,5 +63,15 @@ class Event < ActiveRecord::Base
     def show_accepted_attendees(event_id)
         Attendance.accepted.where(event_id: event_id)
     end
+
+    private
+
+        def end_after_start
+            return if end_date.blank? || start_date.blank?
+
+            if end_date < start_date
+                errors.add(:end_date, "must be after the start date")
+            end
+        end
 
 end

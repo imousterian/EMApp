@@ -39,6 +39,10 @@
                     </td>
                 </tr>
                 <tr>
+                        <td>Tags:</td>
+                        <td><%=raw @event.tags.map(&:name).map { |t| link_to t, tag_path(t) }.join(', ') %></td>
+                    </tr>
+                <tr>
                     <td><strong>Attendees:</strong></td>
                     <td><% @attendees.each do |attendee| %>
                         <%= image_tag avatar_url(attendee.user) %>
